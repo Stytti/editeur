@@ -1,0 +1,66 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+}
+
+.hint {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-muted);
+}
+
+.layer-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.layer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-strong);
+    background: var(--surface-2);
+    color: var(--text);
+    text-align: left;
+}
+.layer:hover { border-color: #3a4150; }
+
+.layer__name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.layer__time {
+    flex: none;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.layer[aria-pressed="true"] {
+    border-color: var(--accent);
+    background: var(--surface-selected);
+}
+.layer[aria-pressed="true"] .layer__time { color: #b9c6da; }
+
+/* Boutons du bas */
+.sidebar__footer {
+    display: flex;
+    gap: 8px;
+    margin-top: auto; /* colle les boutons en bas de la colonne */
+}

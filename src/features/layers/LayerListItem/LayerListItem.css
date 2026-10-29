@@ -1,0 +1,20 @@
+.layer-list-item {
+    background: var(--surface-selected);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.layer-list-item--selected {
+    background: var(--surface-selected);
+    border-color: var(--accent);
+}

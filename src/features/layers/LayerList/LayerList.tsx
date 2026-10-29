@@ -1,0 +1,51 @@
+import './LayerList.css';
+import {Button} from "../../../components/Button/Button.tsx";
+import {useState} from "react";
+import type {TitleItem} from "../../../types/TitleItem.tsx";
+import {LayerListItem} from "../LayerListItem/LayerListItem.tsx";
+
+interface LayerListProps {
+    titles: TitleItem[],
+    selectedTitleId: string|null,
+    onSelect: (titleItemId: string) => void
+}
+
+export function LayerList({ titles, selectedTitleId, onSelect }: LayerListProps) {
+    const [hasSelection, setHasSelection] = useState(false);
+
+    const sortedTitleItems = [...titles].sort(
+        (a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
+    );
+
+    const onDuplicate = () => {
+        console.log("Duplicate clicked");
+    }
+
+    const onDelete = () => {
+        console.log("Delete clicked");
+    }
+
+    return (
+        <aside className="sidebar">
+            <h2 className="panel-heading">Titres (z-order)</h2>
+
+            <ul className="layer-list">
+                {sortedTitleItems.map(titleItem => (
+                    <li key={titleItem.id}>
+                        <LayerListItem titleItem={titleItem} selectedTitleId={selectedTitleId}
+                                    onSelect={(titleItemId) => onSelect(titleItemId)} />
+                    </li>
+                ))}
+            </ul>
+
+            <p className="hint">
+                Le haut de la liste est au premier plan. Le dernier élément du tableau est dessiné en dernier.
+            </p>
+
+            <div className="sidebar__footer">
+                <Button text="Dupliquer" className="btn--block" disabled={!hasSelection} onButtonClick={onDuplicate} />
+                <Button text="Supprimer" className="btn--block btn--danger" disabled={!hasSelection} onButtonClick={onDelete} />
+            </div>
+        </aside>
+    );
+}

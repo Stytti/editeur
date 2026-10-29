@@ -1,0 +1,16 @@
+/* Header */
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+}
+.toolbar__brand { display: flex; align-items: center; gap: 10px; }
+.toolbar__logo { width: 10px; height: 10px; border-radius: 3px; background: var(--accent); }
+.toolbar__title { font-size: 14px; font-weight: 600; }
+.toolbar__meta { color: var(--text-muted); }
+.toolbar__actions { display: flex; flex-wrap: wrap; gap: 8px; }

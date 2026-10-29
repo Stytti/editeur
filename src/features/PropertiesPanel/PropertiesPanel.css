@@ -1,0 +1,142 @@
+.panel-empty {
+    margin: auto 0;
+    text-align: center;
+    line-height: 1.5;
+    color: var(--text-muted);
+}
+
+/* Sections séparées par un filet */
+.panel-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.panel-section + .panel-section {
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+}
+
+.panel-section__title {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.input, .select, .textarea {
+    width: 100%;
+    padding: 8px 10px;
+    background: var(--bg);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    color: var(--text);
+    font: inherit;
+    font-size: 13px;
+}
+
+.input:focus, .select:focus, .textarea:focus {
+    border-color: var(--accent);
+    outline: none;
+}
+
+.textarea {
+    resize: vertical;
+}
+
+.mono {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Grilles de champs */
+.field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.field-row--with-size {
+    grid-template-columns: 1fr 90px;
+}
+
+.field-row--with-unit {
+    grid-template-columns: 1fr 80px;
+}
+
+/* Couleur : pastille + hex */
+.color-input {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.color-input input[type="color"] {
+    width: 28px;
+    height: 28px;
+    flex: none;
+    padding: 0;
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    background: none;
+    cursor: pointer;
+}
+
+.color-input input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.color-input input[type="color"]::-webkit-color-swatch {
+    border: 0;
+    border-radius: 3px;
+}
+
+.color-input input[type="color"]::-moz-color-swatch {
+    border: 0;
+    border-radius: 3px;
+}
+
+/* Contrôle segmenté */
+.segmented {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.segmented__item {
+    height: 36px;
+    border: 0;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.segmented__item[aria-pressed="true"] {
+    background: var(--surface-selected);
+    font-weight: 600;
+}
+
+/* Case à cocher et slider */
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.checkbox input, .panel input[type="range"] {
+    accent-color: var(--accent);
+}
+
+.checkbox input {
+    width: 18px;
+    height: 18px;
+}
+
+.panel input[type="range"] {
+    width: 100%;
+}
+
+.panel input[type="range"]:disabled {
+    opacity: 0.4;
+}

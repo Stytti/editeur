@@ -1,0 +1,12 @@
+.video-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.action-buttons {
+    margin-top: 6px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
