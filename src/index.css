@@ -1,0 +1,98 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
+
+:root {
+    color-scheme: dark;
+
+    /* Surfaces */
+    --bg: #0f1115;            /* fond général, champs de saisie */
+    --surface: #14171d;       /* barres, panneaux latéraux */
+    --surface-2: #1b1f27;     /* boutons secondaires */
+    --surface-timeline: #111318;
+    --surface-selected: #1c2638;
+
+    /* Bordures */
+    --border: #262b35;
+    --border-strong: #2b313c;
+    --border-subtle: #22262f;
+
+    /* Texte */
+    --text: #e6e8ec;
+    --text-muted: #9aa3b2;
+    --text-icon: #c9cfd9;
+    --text-on-accent: #0b0d11;
+
+    /* Accent (sélection, actions principales) */
+    --accent: #4c8dff;
+
+    /* Danger */
+    --danger-bg: #2a1717;
+    --danger-border: #5a2b2b;
+    --danger-text: #ffb4b4;
+
+    /* Timeline */
+    --clip: #c98a2b;
+    --clip-selected: #e0a33a;
+    --clip-text: #1a1206;
+    --track-video: #2a2f3a;
+    --frame-a: #343a47;
+    --frame-b: #1b1f27;
+    --ruler-tick: #3a4150;
+    --ruler-tick-major: #6b7383;
+    --playhead: #ffffff;
+
+    /* Aperçu */
+    --frame-bg: #000000;
+    --video-placeholder: #2a2f3a;
+
+    /* Typo */
+    --font-ui: "Inter", system-ui, -apple-system, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+    --fs-xs: 11px;
+    --fs-sm: 12px;
+    --fs-base: 13px;
+    --fs-md: 14px;
+
+    /* Espacements */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+
+    /* Rayons */
+    --radius-sm: 4px;
+    --radius: 6px;
+    --radius-lg: 8px;
+
+    /* Tailles */
+    --control-h: 36px;
+    --sidebar-w: 240px;
+    --panel-w: 320px;
+    --track-header-w: 112px;
+    --track-h: 40px;
+    --track-video-h: 60px;
+    --preview-h: 70vh;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-auto {
+    flex: 1 1 auto;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+.mono {
+    font-family: var(--font-mono), sans-serif;
+}

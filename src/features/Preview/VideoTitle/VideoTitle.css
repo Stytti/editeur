@@ -1,0 +1,26 @@
+/* Un titre : position / taille en % posées en inline depuis le modèle. */
+.title-layer {
+    position: absolute;
+    cursor: move;
+}
+
+.title-layer__text {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    line-height: 1.15;
+    paint-order: stroke fill; /* le contour passe sous le remplissage */
+}
+
+.title-layer--selected {
+    outline: 1.5px solid var(--accent);
+}
+
+.title-layer--editing {
+    outline: 1.5px dashed var(--accent);
+    cursor: text;
+}
+
+.title-layer--editing .title-layer__text {
+    outline: none;
+    caret-color: var(--accent);
+}

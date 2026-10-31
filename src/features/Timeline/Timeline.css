@@ -20,7 +20,7 @@
     justify-content: space-between;
     gap: 12px;
     padding: 6px 12px;
-    border-bottom: 1px solid #22262f;
+    border-bottom: 1px solid var(--border-subtle);
 }
 .timeline__tools { display: flex; align-items: center; gap: 2px; }
 .timeline__divider { width: 1px; height: 20px; margin: 0 6px; background: var(--border-strong); }
@@ -50,7 +50,7 @@
     flex-direction: column;
     gap: 4px;
     padding-top: 36px; /* hauteur de la règle + son margin */
-    border-right: 1px solid #22262f;
+    border-right: 1px solid var(--border-subtle);
     color: var(--text-muted);
 }
 .track-header { height: var(--track-h); display: flex; align-items: center; padding: 0 12px; }
@@ -73,12 +73,12 @@
     position: relative;
     height: 28px;
     margin-bottom: 4px;
-    background-image: repeating-linear-gradient(to right, #3a4150 0 1px, transparent 1px var(--tick));
+    background-image: repeating-linear-gradient(to right, var(--ruler-tick) 0 1px, transparent 1px var(--tick));
     background-size: 100% 6px;
     background-repeat: no-repeat;
     background-position: bottom;
 }
-.ruler__mark { position: absolute; bottom: 0; width: 1px; height: 12px; background: #6b7383; }
+.ruler__mark { position: absolute; bottom: 0; width: 1px; height: 12px; background: var(--ruler-tick); }
 .ruler__label {
     position: absolute; bottom: 14px; left: 4px;
     font-family: "JetBrains Mono", ui-monospace, monospace;
@@ -123,8 +123,8 @@
     margin-top: 8px;
     border-radius: var(--radius);
     overflow: hidden;
-    background-color: #2a2f3a;
-    background-image: repeating-linear-gradient(to right, #343a47 0 calc(6.25% - 2px), #1b1f27 calc(6.25% - 2px) 6.25%);
+    background-color: var(--track-video);
+    background-image: repeating-linear-gradient(to right, var(--frame-a) 0 calc(6.25% - 2px), var(--frame-b) calc(6.25% - 2px) 6.25%);
 }
 .track--video__label {
     position: absolute; left: 8px; top: 6px;

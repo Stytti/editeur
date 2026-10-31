@@ -1,7 +1,6 @@
 import './LayerList.css';
 import {Button} from "../../../components/Button/Button.tsx";
-import {useState} from "react";
-import type {TitleItem} from "../../../types/TitleItem.tsx";
+import type {TitleItem} from "../../../types/TitleItem.ts";
 import {LayerListItem} from "../LayerListItem/LayerListItem.tsx";
 
 interface LayerListProps {
@@ -11,10 +10,9 @@ interface LayerListProps {
 }
 
 export function LayerList({ titles, selectedTitleId, onSelect }: LayerListProps) {
-    const [hasSelection, setHasSelection] = useState(false);
 
     const sortedTitleItems = [...titles].sort(
-        (a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
+        (a, b) => a.startTime - b.startTime
     );
 
     const onDuplicate = () => {
@@ -26,14 +24,13 @@ export function LayerList({ titles, selectedTitleId, onSelect }: LayerListProps)
     }
 
     return (
-        <aside className="sidebar">
+        <div className="flex-column flex-auto">
             <h2 className="panel-heading">Titres (z-order)</h2>
 
             <ul className="layer-list">
                 {sortedTitleItems.map(titleItem => (
                     <li key={titleItem.id}>
-                        <LayerListItem titleItem={titleItem} selectedTitleId={selectedTitleId}
-                                    onSelect={(titleItemId) => onSelect(titleItemId)} />
+                        <LayerListItem titleItem={titleItem} isSelected={titleItem.id === selectedTitleId} onSelect={onSelect} />
                     </li>
                 ))}
             </ul>
@@ -43,9 +40,9 @@ export function LayerList({ titles, selectedTitleId, onSelect }: LayerListProps)
             </p>
 
             <div className="sidebar__footer">
-                <Button text="Dupliquer" className="btn--block" disabled={!hasSelection} onButtonClick={onDuplicate} />
-                <Button text="Supprimer" className="btn--block btn--danger" disabled={!hasSelection} onButtonClick={onDelete} />
+                <Button text="Dupliquer" className="btn--block" disabled={!selectedTitleId} onButtonClick={onDuplicate} />
+                <Button text="Supprimer" className="btn--block btn--danger" disabled={!selectedTitleId} onButtonClick={onDelete} />
             </div>
-        </aside>
+        </div>
     );
 }

@@ -1,18 +1,18 @@
 import './LayerListItem.css';
 
-import type {TitleItem} from "../../../types/TitleItem.tsx";
+import type {TitleItem} from "../../../types/TitleItem.ts";
+import {Button} from "../../../components/Button/Button.tsx";
 
 interface LayerListItemProps {
     titleItem: TitleItem,
-    selectedTitleId: string|null,
+    isSelected: boolean,
     onSelect: (titleItemId: string) => void
 }
 
-export function LayerListItem({titleItem, selectedTitleId, onSelect}: LayerListItemProps) {
+export function LayerListItem({titleItem, isSelected, onSelect}: LayerListItemProps) {
     return (
-        <p className={`layer-list-item ${titleItem.id === selectedTitleId ? 'layer-list-item--selected' : ''}`}
-           onClick={() => onSelect(titleItem.id)}>
-            <span>{titleItem.text}</span> <span>{titleItem.startTime}-{titleItem.endTime} s</span>
-        </p>
+      <Button className={`layer-list-item ${isSelected ? 'layer-list-item--selected' : ''}`}
+              text={`${titleItem.text} (${titleItem.startTime}-${titleItem.endTime}s)`}
+              onButtonClick={() => onSelect(titleItem.id)} />
     );
 }

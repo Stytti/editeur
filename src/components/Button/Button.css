@@ -13,7 +13,7 @@
 }
 
 .btn:hover {
-    border-color: #3a4150;
+    border-color: var(--ruler-tick);
 }
 
 .btn--primary {

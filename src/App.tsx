@@ -1,41 +1,20 @@
 import './App.css'
 import {Header} from "./layout/Header/Header.tsx";
 import {LayerList} from "./features/layers/LayerList/LayerList.tsx";
-import {Timeline} from "./features/Timeline/Timeline.tsx";
 import {PropertiesPanel} from "./features/PropertiesPanel/PropertiesPanel.tsx";
 import {useState} from "react";
-import type {TitleItem} from "./types/TitleItem.tsx";
-
-const firstTitle: TitleItem = {
-    id: "title-1",
-    text: "mon ame",
-    startTime: 0,
-    endTime: 8,
-    x: 10,
-    y: 40,
-    width: 80,
-    height: 16,
-    fontId: "snowball",
-    fontSize: 4.4,
-    color: "#FFE600",
-    strokeColor: "#000000",
-    strokeWidth: 2,
-    shinyWidth: 0,
-    backgroundColor: null,
-    align: "center",
-    effect: null,
-    animation: null,
-    zOrder: 1
-}
+import type {TitleItem} from "./types/TitleItem.ts";
+import {Preview} from "./features/Preview/Preview.tsx";
+import {FIRST_TITLE, PREMIERE_VIDEO_ID} from "./types/Constant.ts";
 
 function App() {
-    const [titles, setTitles] = useState<TitleItem[]>([firstTitle]);
+    const [titles, setTitles] = useState<TitleItem[]>([FIRST_TITLE]);
     const [selectedId, setSelectedId] = useState<string | null>(null);
+    const [videoSrc, setVideoSrc] = useState<string>(PREMIERE_VIDEO_ID);
 
     const selectedTitleItem = titles.find((titleItem) => titleItem.id === selectedId);
 
     function handleFieldChange(updatedTitleItem: TitleItem) {
-        console.log("updatedTitleItem : ",  updatedTitleItem)
         setTitles((prevTitles) =>
             prevTitles.map((title) =>
                 (title.id === updatedTitleItem.id ? updatedTitleItem : title)
@@ -45,14 +24,15 @@ function App() {
 
     return (
         <div className="app">
-            <Header />
+            <Header videoSrc={videoSrc} videoChange={setVideoSrc} />
             <div className="app__main">
-                <LayerList titles={titles} selectedTitleId={selectedId ?? null}
-                           onSelect={setSelectedId} />
+                <aside className="sidebar">
+                    <LayerList titles={titles} selectedTitleId={selectedId}
+                               onSelect={setSelectedId} />
+                </aside>
 
                 <main className="stage">
-                    {/* <Preview /> puis <Transport /> */}
-                    <Timeline />
+                    <Preview videoSrc={videoSrc} titles={titles} />
                 </main>
 
                 <aside className="panel">
