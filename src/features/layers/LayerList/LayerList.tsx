@@ -6,22 +6,15 @@ import {LayerListItem} from "../LayerListItem/LayerListItem.tsx";
 interface LayerListProps {
     titles: TitleItem[],
     selectedTitleId: string|null,
-    onSelect: (titleItemId: string) => void
+    onSelect: (titleItemId: string) => void,
+    onDuplicate: () => void,
+    onDelete: () => void
 }
 
-export function LayerList({ titles, selectedTitleId, onSelect }: LayerListProps) {
-
+export function LayerList({ titles, selectedTitleId, onSelect, onDuplicate, onDelete }: LayerListProps) {
     const sortedTitleItems = [...titles].sort(
         (a, b) => a.startTime - b.startTime
     );
-
-    const onDuplicate = () => {
-        console.log("Duplicate clicked");
-    }
-
-    const onDelete = () => {
-        console.log("Delete clicked");
-    }
 
     return (
         <div className="flex-column flex-auto">

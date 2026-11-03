@@ -5,19 +5,8 @@ import {
 import {Field} from "../../components/Field/Field.tsx";
 import {Button} from "../../components/Button/Button.tsx";
 import './PropertiesPanel.css';
-
-const FONTS = [
-    { value: "snowball", label: "Snowball" },
-    { value: "archivo-black", label: "Archivo Black" },
-    { value: "montserrat", label: "Montserrat" },
-    { value: "poppins", label: "Poppins" },
-    { value: "inter", label: "Inter" },
-    { value: "bebas-neue", label: "Bebas Neue" },
-    { value: "anton", label: "Anton" },
-    { value: "oswald", label: "Oswald" },
-    { value: "space-grotesk", label: "Space Grotesk" },
-    { value: "barlow-condensed", label: "Barlow Condensed" },
-];
+import {FONTS} from "../../types/Constant.ts";
+import {pctToPixel, pixelToPct} from "../../geometry/percent.ts";
 
 const ALIGN_LABELS = { left: "Gauche", center: "Centre", right: "Droite" };
 
@@ -52,7 +41,7 @@ export function PropertiesPanel({titleItem, onFieldChange}: PropertiesPanelProps
     }
 
     function handleEffectTypeChange(value: string) {
-        // find() renvoie l'élément typé EffectType (ou undefined) : pas besoin de cast "as"
+        // find() renvoie l'élément typé EffectType
         const type = EFFECT_TYPES.find((effectType) => effectType === value);
         updateField('effect', type ? { type, strength: titleItem.effect?.strength ?? DEFAULT_STRENGTH } : null);
     }
@@ -72,15 +61,15 @@ export function PropertiesPanel({titleItem, onFieldChange}: PropertiesPanelProps
             <h2 className="panel-heading">Propriétés · {titleItem.id}</h2>
 
             {/* Texte */}
-            <section className="panel-section">
+            <section className="mt-3 panel-section">
                 <Field label='Texte' fieldType='textarea' rows={2} value={titleItem.text}
                        onChange={(value: string) => updateField('text', value)} />
 
                 <div className="field-row field-row--with-size">
                     <Field label="Police" fieldType='select' value={titleItem.fontId} options={FONTS}
                            onChange={(value: string) => updateField('fontId', value)} />
-                    <Field label="Taille %" fieldType="number" value={titleItem.fontSize} min={0.5} step={0.1}
-                            onChange={(value: number) => updateField('fontSize', value)} />
+                    <Field label="Taille en px" fieldType="number" value={pctToPixel(titleItem.fontSize)} min={0.5} step={0.1}
+                            onChange={(value: number) => updateField('fontSize', pixelToPct(value))} />
                 </div>
 
                 <div className="field">

@@ -1,3 +1,12 @@
+/* Le calque qui contient tous les titres : il recouvre toute la frame 9:16,
+   donc les % (left/top/width/height) de chaque titre sont relatifs à la frame.
+   container-type: size → active l'unité cqh (1cqh = 1 % de la hauteur de ce conteneur). */
+.title-layers {
+    position: absolute;
+    inset: 0;
+    container-type: size;
+}
+
 /* Un titre : position / taille en % posées en inline depuis le modèle. */
 .title-layer {
     position: absolute;

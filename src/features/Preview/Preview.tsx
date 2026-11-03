@@ -13,7 +13,7 @@ interface PreviewProps {
 
 export function Preview({videoSrc, titles}: PreviewProps) {
   const ref = useRef(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement|null>(null);
 
   // Etat de lecture de la vidéo
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -46,16 +46,13 @@ export function Preview({videoSrc, titles}: PreviewProps) {
       <div ref={ref} className='frame'>
         <div className='frame__video'>
           <VideoPlayer src={videoSrc} videoRef={videoRef} handleLoadedMetadata={handleLoadedMetadata} handleTimeUpdate={handleTimeUpdate} />
-          <VideoTitle currentTime={currentTime} titles={titles} />
         </div>
+        <VideoTitle ref={ref} currentTime={currentTime} titles={titles} />
       </div>
-      <div className='d-flex justify-content-center align-items-center'>
-        <Button text={isPlaying ? "Pause" : "Play"} onButtonClick={handlePlayPause} />
+      <div className='flex-row gap-3 align-items-center'>
+        <Button className='play-button' text={isPlaying ? "Pause" : "Play"} onButtonClick={handlePlayPause} />
         <Timeline duration={duration} currentTime={currentTime} currentTimeChange={setCurrentTime} videoRef={videoRef} />
       </div>
     </>
   );
 }
-
-{/*<VideoScrubber videoRef={videoRef} duration={duration}*/}
-{/*               currentTime={currentTime} currentTimeChange={setCurrentTime} />*/}

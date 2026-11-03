@@ -22,3 +22,8 @@
     object-fit: cover;
     background: var(--video-placeholder);
 }
+
+.play-button {
+    padding: 10px;
+    border-radius: 50%;
+}

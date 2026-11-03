@@ -5,12 +5,13 @@ import {PropertiesPanel} from "./features/PropertiesPanel/PropertiesPanel.tsx";
 import {useState} from "react";
 import type {TitleItem} from "./types/TitleItem.ts";
 import {Preview} from "./features/Preview/Preview.tsx";
-import {FIRST_TITLE, PREMIERE_VIDEO_ID} from "./types/Constant.ts";
+import {PREMIERE_VIDEO_ID} from "./types/Constant.ts";
+import {useTitles} from "./services/useTitles.ts";
 
 function App() {
-    const [titles, setTitles] = useState<TitleItem[]>([FIRST_TITLE]);
-    const [selectedId, setSelectedId] = useState<string | null>(null);
     const [videoSrc, setVideoSrc] = useState<string>(PREMIERE_VIDEO_ID);
+
+    const { titles, setTitles, addNewTitle, selectedId, setSelectedId, duplicateTitle, deleteTitle } = useTitles();
 
     const selectedTitleItem = titles.find((titleItem) => titleItem.id === selectedId);
 
@@ -24,11 +25,11 @@ function App() {
 
     return (
         <div className="app">
-            <Header videoSrc={videoSrc} videoChange={setVideoSrc} />
+            <Header videoSrc={videoSrc} videoChange={setVideoSrc} addNewTitle={addNewTitle} />
             <div className="app__main">
                 <aside className="sidebar">
                     <LayerList titles={titles} selectedTitleId={selectedId}
-                               onSelect={setSelectedId} />
+                               onSelect={setSelectedId} onDuplicate={duplicateTitle} onDelete={deleteTitle} />
                 </aside>
 
                 <main className="stage">

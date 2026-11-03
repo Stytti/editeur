@@ -2,7 +2,7 @@ import {type RefObject} from "react";
 
 export interface VideoPlayerProps {
     src: string;
-    videoRef: RefObject<HTMLVideoElement> | null;
+    videoRef: RefObject<HTMLVideoElement | null>;
     handleLoadedMetadata: () => void;
     handleTimeUpdate: () => void;
 }
@@ -13,12 +13,12 @@ export function VideoPlayer({ src, videoRef, handleLoadedMetadata, handleTimeUpd
     }
 
     const onLoadedMetadata = () => {
-        if (!videoRef?.current) return;
+        if (!videoRef.current) return;
         handleLoadedMetadata();
     }
 
     const onTimeUpdate = () => {
-        if (!videoRef?.current) return;
+        if (!videoRef.current) return;
         handleTimeUpdate();
     }
 
