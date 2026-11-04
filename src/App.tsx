@@ -23,9 +23,15 @@ function App() {
         );
     }
 
+    function importTitles(titles: TitleItem[]) {
+        setTitles(titles);
+        setSelectedId(null);
+    }
+
     return (
         <div className="app">
-            <Header videoSrc={videoSrc} videoChange={setVideoSrc} addNewTitle={addNewTitle} />
+            <Header videoSrc={videoSrc} videoChange={setVideoSrc} addNewTitle={addNewTitle}
+                    onImport={importTitles} onImportError={(message) => console.error(message)}/>
             <div className="app__main">
                 <aside className="sidebar">
                     <LayerList titles={titles} selectedTitleId={selectedId}
@@ -33,7 +39,8 @@ function App() {
                 </aside>
 
                 <main className="stage">
-                    <Preview videoSrc={videoSrc} titles={titles} />
+                    <Preview videoSrc={videoSrc} titles={titles}
+                             onSelect={setSelectedId} onTitleChange={handleFieldChange} />
                 </main>
 
                 <aside className="panel">

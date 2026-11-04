@@ -8,11 +8,13 @@ import type {TitleItem} from "../../types/TitleItem.ts";
 
 interface PreviewProps {
   videoSrc: string;
-  titles: TitleItem[]
+  titles: TitleItem[];
+  onSelect: (id: string) => void;
+  onTitleChange: (updatedTitle: TitleItem) => void;
 }
 
-export function Preview({videoSrc, titles}: PreviewProps) {
-  const ref = useRef(null);
+export function Preview({videoSrc, titles, onSelect, onTitleChange}: PreviewProps) {
+  const frameRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement|null>(null);
 
   // Etat de lecture de la vidéo
@@ -43,11 +45,12 @@ export function Preview({videoSrc, titles}: PreviewProps) {
 
   return (
     <>
-      <div ref={ref} className='frame'>
+      <div ref={frameRef} className='frame'>
         <div className='frame__video'>
           <VideoPlayer src={videoSrc} videoRef={videoRef} handleLoadedMetadata={handleLoadedMetadata} handleTimeUpdate={handleTimeUpdate} />
         </div>
-        <VideoTitle ref={ref} currentTime={currentTime} titles={titles} />
+        <VideoTitle frameRef={frameRef} currentTime={currentTime} titles={titles}
+                    onSelect={onSelect} onTitleChange={onTitleChange} />
       </div>
       <div className='flex-row gap-3 align-items-center'>
         <Button className='play-button' text={isPlaying ? "Pause" : "Play"} onButtonClick={handlePlayPause} />

@@ -1,11 +1,6 @@
 import type {TitleItem} from "../types/TitleItem.ts";
-import {FIRST_TITLE} from "../types/Constant.ts";
 
 export class TitleService {
-
-  getInitialTitles(): TitleItem[] {
-    return [FIRST_TITLE];
-  }
 
   createNewTitle(): TitleItem {
     return {
@@ -19,7 +14,7 @@ export class TitleService {
       height: 16,
       fontId: "snowball",
       fontSize: 4.4,
-      color: "#FFE600",
+      color: "#fff",
       strokeColor: "#000000",
       strokeWidth: 2,
       shinyWidth: 0,

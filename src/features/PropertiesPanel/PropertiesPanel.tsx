@@ -68,7 +68,7 @@ export function PropertiesPanel({titleItem, onFieldChange}: PropertiesPanelProps
                 <div className="field-row field-row--with-size">
                     <Field label="Police" fieldType='select' value={titleItem.fontId} options={FONTS}
                            onChange={(value: string) => updateField('fontId', value)} />
-                    <Field label="Taille en px" fieldType="number" value={pctToPixel(titleItem.fontSize)} min={0.5} step={0.1}
+                    <Field label="Taille en px" fieldType="number" value={Math.round(pctToPixel(titleItem.fontSize))} min={1} step={1}
                             onChange={(value: number) => updateField('fontSize', pixelToPct(value))} />
                 </div>
 

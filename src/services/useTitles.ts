@@ -4,9 +4,7 @@ import {titleService} from "./TitleService.ts";
 
 export function useTitles() {
 
-  const [titles, setTitles] = useState<TitleItem[]>(
-    () => titleService.getInitialTitles()
-  );
+  const [titles, setTitles] = useState<TitleItem[]>([]);
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
 

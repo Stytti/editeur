@@ -7,5 +7,5 @@ export function pctToPixel(pct: number): number {
 
 export function pixelToPct(pixel: number): number {
     const total = EXPORT_FRAME.height;
-    return (pixel * total) / 100;
+    return (pixel * 100) / total;
 }

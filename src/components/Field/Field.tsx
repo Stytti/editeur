@@ -2,8 +2,7 @@ import './Field.css';
 import type {FieldProps} from "./Field.type.ts";
 
 export function Field(props: FieldProps) {
-    // La case à cocher a sa propre mise en page (case + libellé sur une ligne) :
-    // on ne l'enveloppe pas dans le <label className="field"> commun, sinon on aurait 2 <label> imbriqués.
+    // La case à cocher a sa propre mise en page (case + libellé sur une ligne)
     if (props.fieldType === 'checkbox') {
         return (
             <label className="checkbox">
