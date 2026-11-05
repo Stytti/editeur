@@ -1,7 +1,7 @@
 import './LayerListItem.css';
 
-import type {TitleItem} from "../../../types/TitleItem.ts";
 import {Button} from "../../../components/Button/Button.tsx";
+import type {TitleItem} from "../../../model/montageSchema.ts";
 
 interface LayerListItemProps {
     titleItem: TitleItem,

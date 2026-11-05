@@ -4,7 +4,7 @@ import {VideoPlayer} from "./VideoPlayer/VideoPlayer.tsx";
 import {Timeline} from "../Timeline/Timeline.tsx";
 import {Button} from "../../components/Button/Button.tsx";
 import {VideoTitle} from "./VideoTitle/VideoTitle.tsx";
-import type {TitleItem} from "../../types/TitleItem.ts";
+import type {TitleItem} from "../../model/montageSchema.ts";
 
 interface PreviewProps {
   videoSrc: string;

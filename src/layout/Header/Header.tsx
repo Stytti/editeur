@@ -3,13 +3,13 @@ import {Button} from "../../components/Button/Button.tsx";
 import {Field} from "../../components/Field/Field.tsx";
 import {ImportJsonButton} from "../../components/ImportJsonButton/ImportJsonButton.tsx";
 import {DEUXIEME_VIDEO_ID, PREMIERE_VIDEO_ID, TROISIEME_VIDEO_ID} from "../../types/Constant.ts";
-import type {TitleItem} from "../../types/TitleItem.ts";
+import type {Montage} from "../../model/montageSchema.ts";
 
 interface HeaderProps {
   videoSrc: string;
   videoChange: (videoId: string) => void;
   addNewTitle: () => void,
-  onImport: (titles: TitleItem[]) => void;
+  onImport: (montage: Montage) => void;
   onImportError: (message: string) => void;
 }
 

@@ -1,6 +1,6 @@
 import {useState} from "react";
-import type {TitleItem} from "../types/TitleItem";
-import {titleService} from "./TitleService.ts";
+import type {TitleItem} from "../model/montageSchema.ts";
+import {createNewTitle} from "../model/createTitle.ts";
 
 export function useTitles() {
 
@@ -9,7 +9,7 @@ export function useTitles() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const addNewTitle = () => {
-    const newTitle = titleService.createNewTitle();
+    const newTitle = createNewTitle();
 
     setTitles(prev => [...prev, newTitle]);
     setSelectedId(newTitle.id);

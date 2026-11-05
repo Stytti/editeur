@@ -1,7 +1,7 @@
-import type {TitleItem} from "../../../types/TitleItem.ts";
 import './VideoTitle.css';
 import {type PointerEvent, type RefObject, useRef} from "react";
 import {FONTS} from "../../../types/Constant.ts";
+import type {TitleItem} from "../../../model/montageSchema.ts";
 
 interface VideoTitleProps {
   frameRef: RefObject<HTMLDivElement | null>;
@@ -27,11 +27,9 @@ function clamp(value: number, min: number, max: number): number {
 }
 
 export function VideoTitle({ frameRef, currentTime, titles, onSelect, onTitleChange }: VideoTitleProps) {
-  // useRef et pas useState : ces infos ne s'affichent pas, inutile de re-rendre quand elles changent.
   const dragStart = useRef<DragStart | null>(null);
 
   function handlePointerDown(e: PointerEvent<HTMLDivElement>, title: TitleItem) {
-    // Capture : on continue à recevoir les mouvements même si la souris sort du titre.
     e.currentTarget.setPointerCapture(e.pointerId);
     dragStart.current = { title, mouseX: e.clientX, mouseY: e.clientY };
     onSelect(title.id);

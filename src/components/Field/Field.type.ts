@@ -1,5 +1,6 @@
 export type BaseProps = {
     label: string;
+    error: string | null;
 };
 
 export type TextFieldProps = BaseProps & {
