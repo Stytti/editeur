@@ -33,8 +33,8 @@ export function LayerList({ titles, selectedTitleId, onSelect, onDuplicate, onDe
             </p>
 
             <div className="sidebar__footer">
-                <Button text="Dupliquer" className="btn--block" disabled={!selectedTitleId} onButtonClick={onDuplicate} />
-                <Button text="Supprimer" className="btn--block btn--danger" disabled={!selectedTitleId} onButtonClick={onDelete} />
+                <Button className="btn--block" disabled={!selectedTitleId} onButtonClick={onDuplicate}>Dupliquer</Button>
+                <Button className="btn--block btn--danger" disabled={!selectedTitleId} onButtonClick={onDelete}>Supprimer</Button>
             </div>
         </div>
     );

@@ -70,16 +70,15 @@ export function PropertiesPanel({titleItem, duration, onFieldChange}: Properties
 
       {/* Texte */}
       <section className="mt-3 panel-section">
-        <Field label='Texte' fieldType='textarea' rows={2} value={titleItem.text} error={errors.get('text') ?? null}
+        <Field label='Texte' fieldType='textarea' rows={2} value={titleItem.text} error={errors.text ?? null}
                onChange={(value: string) => updateField('text', value)}/>
 
         <div className="field-row field-row--with-size">
           <Field label="Police" fieldType='select' value={titleItem.fontId} options={FONTS}
-                 error={errors.get('fontId') ?? null}
                  onChange={(value: string) => updateField('fontId', value)}/>
           <Field label="Taille (px)" fieldType="number" value={pctToPixel(titleItem.fontSize, EXPORT_FRAME.height)}
                  min={1} step={1}
-                 error={errors.get('fontSize') ?? null}
+                 error={errors.fontSize ?? null}
                  onChange={(value: number) => updateField('fontSize', pixelToPct(value, EXPORT_FRAME.height))}/>
         </div>
 
@@ -100,28 +99,26 @@ export function PropertiesPanel({titleItem, duration, onFieldChange}: Properties
         <h3 className="panel-section__title">Couleurs</h3>
         <div className="field-row">
           <Field label="Texte" fieldType="color" value={titleItem.color}
-                 onChange={(value) => updateField('color', value)} error={errors.get('color') ?? null}/>
+                 onChange={(value) => updateField('color', value)}/>
           <Field label="Contour" fieldType="color" value={titleItem.strokeColor}
-                 onChange={(value) => updateField('strokeColor', value)} error={errors.get('strokeColor') ?? null}/>
+                 onChange={(value) => updateField('strokeColor', value)}/>
         </div>
         <div className="field-row">
           <Field label="Épaisseur contour (px)" fieldType="number"
-                 value={pctToPixel(titleItem.strokeWidth, EXPORT_FRAME.height)} min={0} step={0.1}
+                 value={pctToPixel(titleItem.strokeWidth, EXPORT_FRAME.height)} min={0} step={1}
                  onChange={(value) => updateField('strokeWidth', pixelToPct(value, EXPORT_FRAME.height))}
-                 error={errors.get('strokeWidth') ?? null}/>
+                 error={errors.strokeWidth ?? null}/>
           <Field label="Glow (px)" fieldType="number" value={pctToPixel(titleItem.shinyWidth, EXPORT_FRAME.height)}
-                 min={0} step={0.1}
+                 min={0} step={1}
                  onChange={(value) => updateField('shinyWidth', pixelToPct(value, EXPORT_FRAME.height))}
-                 error={errors.get('shinyWidth') ?? null}/>
+                 error={errors.shinyWidth ?? null}/>
         </div>
 
         <Field fieldType="checkbox" label="Fond derrière le texte" checked={titleItem.backgroundColor !== null}
-               onChange={(checked) => updateField('backgroundColor', checked ? "#000000" : null)}
-               error={errors.get('backgroundColor') ?? null}/>
+               onChange={(checked) => updateField('backgroundColor', checked ? "#000000" : null)}/>
         {titleItem.backgroundColor !== null && (
           <Field label="Couleur du fond" fieldType="color" value={titleItem.backgroundColor}
-                 onChange={(value) => updateField('backgroundColor', value)}
-                 error={errors.get('backgroundColor') ?? null}/>
+                 onChange={(value) => updateField('backgroundColor', value)}/>
         )}
       </section>
 
@@ -130,9 +127,9 @@ export function PropertiesPanel({titleItem, duration, onFieldChange}: Properties
         <h3 className="panel-section__title">Timing</h3>
         <div className="field-row">
           <Field label="Début (s)" fieldType="number" value={titleItem.startTime} step={0.1}
-                 onChange={(value) => updateField('startTime', value)} error={errors.get('startTime') ?? null}/>
+                 onChange={(value) => updateField('startTime', value)} error={errors.startTime ?? null}/>
           <Field label="Fin (s)" fieldType="number" value={titleItem.endTime} step={0.1}
-                 onChange={(value) => updateField('endTime', value)} error={errors.get('endTime') ?? null}/>
+                 onChange={(value) => updateField('endTime', value)} error={errors.endTime ?? null}/>
         </div>
       </section>
 
@@ -142,56 +139,55 @@ export function PropertiesPanel({titleItem, duration, onFieldChange}: Properties
 
         <div className="field-row">
           <Field label="Effet" fieldType="select" value={titleItem.effect?.type ?? ""} options={EFFECT_OPTIONS}
-                 onChange={handleEffectTypeChange} error={errors.get('effect') ?? null}/>
+                 onChange={handleEffectTypeChange}/>
           <Field label={`Force · ${(titleItem.effect?.strength ?? 0).toFixed(2)}`} fieldType="range"
                  min={0} max={1} step={0.05} value={titleItem.effect?.strength ?? 0}
                  disabled={titleItem.effect === null}
-                 onChange={(value) => titleItem.effect && updateField('effect', {...titleItem.effect, strength: value})}
-                 error={errors.get('effect') ?? null}/>
+                 onChange={(value) => titleItem.effect && updateField('effect', {
+                   ...titleItem.effect,
+                   strength: value
+                 })}/>
         </div>
 
         <div className="field-row field-row--with-unit">
           <Field label="Entrée" fieldType="select" value={animation.in?.type ?? ""} options={ENTRANCE_OPTIONS}
-                 onChange={handleEntranceTypeChange} error={errors.get('in') ?? null}/>
+                 onChange={handleEntranceTypeChange}/>
           <Field label="ms" fieldType="number" min={0} step={50} value={animation.in?.durationMs ?? 0}
                  disabled={animation.in === null}
-                 onChange={(value) => animation.in && updateAnimation({in: {...animation.in, durationMs: value}})}
-                 error={errors.get('in') ?? null}/>
+                 onChange={(value) => animation.in && updateAnimation({in: {...animation.in, durationMs: value}})}/>
         </div>
 
         <div className="field-row field-row--with-unit">
           <Field label="Sortie" fieldType="select" value={animation.out?.type ?? ""} options={EXIT_OPTIONS}
-                 onChange={handleExitTypeChange} error={errors.get('out') ?? null}/>
+                 onChange={handleExitTypeChange} />
           <Field label="ms" fieldType="number" min={0} step={50} value={animation.out?.durationMs ?? 0}
                  disabled={animation.out === null}
                  onChange={(value) => animation.out && updateAnimation({out: {...animation.out, durationMs: value}})}
-                 error={errors.get('out') ?? null}/>
+          />
         </div>
 
         <Field fieldType="checkbox" label="Ghost (flottement continu)" checked={animation.ghost}
-               onChange={(checked) => updateAnimation({ghost: checked})} error={errors.get('ghost') ?? null}/>
+               onChange={(checked) => updateAnimation({ghost: checked})} />
       </section>
 
-      {/* Effet et animation */}
+      {/* Position */}
       <section className="panel-section">
         <h3 className="panel-section__title">Position</h3>
         <div className="field-row field-row--with-unit">
-          <Field disabled label="X en px" fieldType="number" value={pctToPixel(titleItem.x, EXPORT_FRAME.width)} min={0}
+          <Field label="X en px" fieldType="number" value={pctToPixel(titleItem.x, EXPORT_FRAME.width)} min={0}
                  max={EXPORT_FRAME.width} step={1}
                  onChange={(value) => updateField('x', pixelToPct(value, EXPORT_FRAME.width))}
-                 error={errors.get('x') ?? null}/>
-          <Field disabled label="Y en px" fieldType="number" value={pctToPixel(titleItem.y, EXPORT_FRAME.height)}
+                 error={errors.x ?? null}/>
+          <Field label="Y en px" fieldType="number" value={pctToPixel(titleItem.y, EXPORT_FRAME.height)}
                  min={0} max={EXPORT_FRAME.height} step={1}
                  onChange={(value) => updateField('y', pixelToPct(value, EXPORT_FRAME.height))}
-                 error={errors.get('y') ?? null}/>
-          <Field disabled label="Largeur" fieldType="number" value={pctToPixel(titleItem.width, EXPORT_FRAME.width)}
+                 error={errors.y ?? null}/>
+          <Field label="Largeur" fieldType="number" value={pctToPixel(titleItem.width, EXPORT_FRAME.width)}
                  min={0} max={EXPORT_FRAME.width} step={1}
-                 onChange={(value) => updateField('width', pixelToPct(value, EXPORT_FRAME.width))}
-                 error={errors.get('width') ?? null}/>
+                 onChange={(value) => updateField('width', pixelToPct(value, EXPORT_FRAME.width))} />
           <Field disabled label="Hauteur" fieldType="number" value={pctToPixel(titleItem.height, EXPORT_FRAME.height)}
                  min={0} max={EXPORT_FRAME.height} step={1}
-                 onChange={(value) => updateField('height', pixelToPct(value, EXPORT_FRAME.height))}
-                 error={errors.get('height') ?? null}/>
+                 onChange={(value) => updateField('height', pixelToPct(value, EXPORT_FRAME.height))} />
         </div>
       </section>
     </div>

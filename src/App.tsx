@@ -5,44 +5,25 @@ import {PropertiesPanel} from "./features/PropertiesPanel/PropertiesPanel.tsx";
 import {useCallback, useState} from "react";
 import {Preview} from "./features/Preview/Preview.tsx";
 import {PREMIERE_VIDEO_ID} from "./types/Constant.ts";
-import {useTitles} from "./services/useTitles.ts";
-import type {Montage, TitleItem} from "./model/montageSchema.ts";
+import {useMontage} from "./services/useMontage.ts";
 import {Alert} from "./components/Alert/Alert.tsx";
 
 function App() {
     const [videoSrc, setVideoSrc] = useState<string>(PREMIERE_VIDEO_ID);
 
-    const { titles, setTitles, addNewTitle, selectedId, setSelectedId, duplicateTitle, deleteTitle } = useTitles();
-    const [duration, setDuration] = useState<number>(0);
+    const {
+        duration, titles, selectedId, selectedTitle, setSelectedId,
+        importMontage, addNewTitle, updateTitle, duplicateTitle, deleteTitle
+    } = useMontage();
 
     const [error, setError] = useState<string|null>(null);
-
-    const selectedTitleItem = titles.find((titleItem) => titleItem.id === selectedId);
-
-    function handleFieldChange(updatedTitleItem: TitleItem) {
-        setTitles((prevTitles) =>
-            prevTitles.map((title) =>
-                (title.id === updatedTitleItem.id ? updatedTitleItem : title)
-            )
-        );
-    }
-
-    function importTitles(montage: Montage) {
-        setTitles(montage.titles);
-        setDuration(montage.duration);
-        setSelectedId(null);
-    }
 
     const clearError = useCallback(() => setError(null), []);
 
     return (
         <div className="app">
             <Header videoSrc={videoSrc} videoChange={setVideoSrc} addNewTitle={addNewTitle}
-                    onImport={importTitles} onImportError={setError} />
-
-            {error && (
-                <Alert message={error} onClose={clearError} />)
-            }
+                    onImport={importMontage} onImportError={setError} />
 
             <div className="app__main">
                 <aside className="sidebar">
@@ -51,19 +32,24 @@ function App() {
                 </aside>
 
                 <main className="stage">
-                    <Preview videoSrc={videoSrc} titles={titles}
-                             onSelect={setSelectedId} onTitleChange={handleFieldChange} />
+                    <Preview videoSrc={videoSrc} titles={titles} duration={duration} selectedId={selectedId}
+                             onSelect={setSelectedId} onTitleChange={updateTitle} />
                 </main>
 
                 <aside className="panel">
-                    {selectedTitleItem ? (
-                        <PropertiesPanel titleItem={selectedTitleItem} duration={duration}
-                                         onFieldChange={handleFieldChange} />
+                    {selectedTitle ? (
+                        <PropertiesPanel titleItem={selectedTitle} duration={duration}
+                                         onFieldChange={updateTitle} />
                     ) : (
                         <p className="panel__empty">Sélectionnez un titre pour modifier ses propriétés</p>
                     )}
                 </aside>
             </div>
+
+            {error && (
+              <Alert message={error} onClose={clearError} />)
+            }
+
         </div>
     )
 }

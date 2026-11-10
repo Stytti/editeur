@@ -1,6 +1,6 @@
 export type BaseProps = {
     label: string;
-    error: string | null;
+    error?: string | null;   // optionnel : la plupart des champs n'ont pas d'erreur possible
 };
 
 export type TextFieldProps = BaseProps & {

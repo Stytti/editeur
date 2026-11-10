@@ -8,7 +8,6 @@ export function Field(props: FieldProps) {
     return (
       <label className="checkbox">
         <input type="checkbox" checked={props.checked}
-               aria-invalid={props.error ? "true" : "false"}
                onChange={(e) => props.onChange(e.target.checked)}/>
         <span>{props.label}</span>
       </label>
@@ -31,7 +30,8 @@ export function Field(props: FieldProps) {
           }
         </select>
       case 'number':
-        return NumberInput(props);
+        return <NumberInput value={props.value} onChange={props.onChange} error={props.error}
+                            step={props.step} min={props.min} max={props.max} disabled={props.disabled}/>;
       case 'range':
         return <input type="range" value={props.value} step={props.step} min={props.min} max={props.max}
                       disabled={props.disabled} aria-invalid={props.error ? "true" : "false"}
