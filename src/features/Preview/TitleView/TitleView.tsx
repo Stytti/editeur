@@ -1,6 +1,7 @@
 import type {TitleItem} from "../../../model/montageSchema.ts";
-import {type RefObject, useRef} from "react";
-import {shouldDisplayTitle} from "../../../model/visibility.ts";
+import {type PointerEvent, type RefObject, useRef} from "react";
+import {clamp} from "../../../geometry/clamp.ts";
+import {getTitleStyle} from "./getTitleStyle.ts";
 
 interface TitleViewProps {
   title: TitleItem,
@@ -15,10 +16,6 @@ interface DragStart {
   title: TitleItem;
   mouseX: number;
   mouseY: number;
-}
-
-function clamp(value: number, min: number, max: number): number {
-  return Math.min(Math.max(value, min), max);
 }
 
 export function TitleView({ title, isSelected, frameRef, onSelect, onTitleChange }: TitleViewProps) {
@@ -57,18 +54,7 @@ export function TitleView({ title, isSelected, frameRef, onSelect, onTitleChange
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       className='title-layer title-layer__text'
-      key={title.id}
-      style={{
-        left: `${title.x}%`,
-        top: `${title.y}%`,
-        width: `${title.width}%`,
-        height: `${title.height}%`,
-        fontSize: `${title.fontSize}cqh`,
-        color: title.color,
-        textShadow: `0 0 ${title.shinyWidth}cqh ${title.strokeColor}`,
-        textAlign: title.align,
-        fontFamily: FONTS.find((f) => f.value === title.fontId)?.label
-      }}
+      style={getTitleStyle(title)}
     >
       {title.text}
     </div>

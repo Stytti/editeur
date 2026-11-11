@@ -2,7 +2,7 @@ import type {TitleItem} from "./montageSchema.ts";
 
 
 export function validateTitle(title: TitleItem, duration: number): Partial<Record<keyof TitleItem, string>> {
-  let errors: Partial<Record<keyof TitleItem, string>> = {};
+  const errors: Partial<Record<keyof TitleItem, string>> = {};
 
   if (!title.text) {
     errors.text = "Le texte ne peut pas être vide.";

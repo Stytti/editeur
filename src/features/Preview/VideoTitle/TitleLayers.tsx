@@ -1,10 +1,10 @@
-import './VideoTitle.css';
+import './TitleLayers.css';
 import {type RefObject} from "react";
 import type {TitleItem} from "../../../model/montageSchema.ts";
 import {shouldDisplayTitle} from "../../../model/visibility.ts";
 import {TitleView} from "../TitleView/TitleView.tsx";
 
-interface VideoTitleProps {
+interface TitleLayersProps {
   frameRef: RefObject<HTMLDivElement | null>;
   currentTime: number;
   titles: TitleItem[];
@@ -13,7 +13,7 @@ interface VideoTitleProps {
   onTitleChange: (updatedTitle: TitleItem) => void;
 }
 
-export function TitleLayers({ frameRef, currentTime, titles, selectedId, onSelect, onTitleChange }: VideoTitleProps) {
+export function TitleLayers({ frameRef, currentTime, titles, selectedId, onSelect, onTitleChange }: TitleLayersProps) {
 
   return (
     <div className='title-layers'>

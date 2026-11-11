@@ -29,6 +29,17 @@ describe("pixelToPct", () => {
   });
 });
 
+describe("conversion sur la largeur (x, width)", () => {
+  it("utilise 1080 px comme référence", () => {
+    expect(pctToPixel(50, EXPORT_FRAME.width)).toBe(540);
+    expect(pixelToPct(108, EXPORT_FRAME.width)).toBe(10);
+  });
+
+  it("donne 864 px pour la largeur 80 % du JSON fourni", () => {
+    expect(pctToPixel(80, EXPORT_FRAME.width)).toBe(864);
+  });
+});
+
 describe("aller-retour % → px → %", () => {
   // C'est la garantie la plus importante : afficher en px puis reconvertir
   // ne doit pas modifier la valeur stockée dans le modèle.
