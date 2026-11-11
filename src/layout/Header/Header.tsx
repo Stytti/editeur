@@ -11,18 +11,15 @@ interface HeaderProps {
   addNewTitle: () => void,
   onImport: (montage: Montage) => void;
   onImportError: (message: string) => void;
+  onExport: () => void;
 }
 
-export function Header({videoSrc, videoChange, addNewTitle, onImport, onImportError}: HeaderProps) {
+export function Header({videoSrc, videoChange, addNewTitle, onImport, onImportError, onExport}: HeaderProps) {
   const videoOptions = [
     {value: PREMIERE_VIDEO_ID, label: "Vidéo 1"},
     {value: DEUXIEME_VIDEO_ID, label: "Vidéo 2"},
     {value: TROISIEME_VIDEO_ID, label: "Vidéo 3"}
   ];
-
-  const onExport = () => {
-    console.log("Export JSON clicked");
-  }
 
   return (
     <header className="toolbar">

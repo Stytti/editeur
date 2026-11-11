@@ -2,7 +2,7 @@ import type {TitleItem} from "./montageSchema.ts";
 
 export function createNewTitle(): TitleItem {
   return {
-    id: `title-${Date.now()}`,
+    id: crypto.randomUUID(),
     text: "Nouveau titre",
     startTime: 0,
     endTime: 5,

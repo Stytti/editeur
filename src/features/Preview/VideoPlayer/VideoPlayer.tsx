@@ -8,9 +8,8 @@ export interface VideoPlayerProps {
 }
 
 export function VideoPlayer({ src, videoRef, handleTimeUpdate, onPlayingChange }: VideoPlayerProps) {
-    const getMediaUrl = (value: string) => {
-        return 'media/' + value + '.mp4';
-    }
+    // Fichiers servis depuis public/media/ (ignoré par git, voir README).
+    const getMediaUrl = (videoId: string) => `/media/${videoId}.mp4`;
 
     const onTimeUpdate = () => {
         if (!videoRef.current) return;
@@ -23,6 +22,6 @@ export function VideoPlayer({ src, videoRef, handleTimeUpdate, onPlayingChange }
                onPlay={() => onPlayingChange(true)}
                onPause={() => onPlayingChange(false)}
                onEnded={() => onPlayingChange(false)}
-               width={640} />
+               className="frame__video-element" />
     );
 }

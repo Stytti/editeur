@@ -12,9 +12,9 @@ interface LayerListProps {
 }
 
 export function LayerList({ titles, selectedTitleId, onSelect, onDuplicate, onDelete }: LayerListProps) {
-    const sortedTitleItems = [...titles].sort(
-        (a, b) => a.startTime - b.startTime
-    );
+    // z-order = ordre du tableau : le dernier titre est dessiné par-dessus les autres dans l'aperçu.
+    // On inverse donc pour l'afficher en HAUT de la liste (premier plan en haut, comme dans un logiciel de dessin).
+    const sortedTitleItems = titles.toReversed();
 
     return (
         <div className="flex-column flex-auto">

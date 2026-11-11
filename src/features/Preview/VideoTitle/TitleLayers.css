@@ -32,4 +32,6 @@
 .title-layer--editing .title-layer__text {
     outline: none;
     caret-color: var(--accent);
+    user-select: text; /* la frame a user-select: none : on le réautorise pour pouvoir sélectionner en édition */
+    -webkit-user-select: text;
 }

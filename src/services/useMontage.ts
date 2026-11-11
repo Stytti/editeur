@@ -37,18 +37,21 @@ export function useMontage() {
     setTitles(prev => prev.map(title => (title.id === updatedTitle.id ? updatedTitle : title)));
   };
 
+  // La copie est insérée JUSTE APRÈS l'original dans le tableau → dessinée juste au-dessus de lui
+  // (z-order = ordre du tableau). randomUUID : deux clics dans la même milliseconde ne donnent pas le même id.
   const duplicateTitle = () => {
-    // AFFICHER ALERT Un titre doit être sélectionné pour être dupliqué
-    if (!selectedTitle) return;
+    if (!selectedTitle) return; // boutons désactivés sans sélection : simple garde
 
-    const duplicatedTitle = {...selectedTitle, id: `title-${Date.now()}`};
-    setTitles(prev => [...prev, duplicatedTitle]);
+    const duplicatedTitle = {...selectedTitle, id: crypto.randomUUID()};
+    setTitles(prev => {
+      const index = prev.findIndex(title => title.id === selectedTitle.id);
+      return prev.toSpliced(index + 1, 0, duplicatedTitle);
+    });
     setSelectedId(duplicatedTitle.id);
   };
 
   const deleteTitle = () => {
-    // AFFICHER ALERT Un titre doit être sélectionné pour être supprimé
-    if (!selectedId) return;
+    if (!selectedId) return; // boutons désactivés sans sélection : simple garde
 
     setTitles(prev => prev.filter(title => title.id !== selectedId));
     setSelectedId(null);

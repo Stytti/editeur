@@ -1,5 +1,5 @@
 import './Preview.css';
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {VideoPlayer} from "./VideoPlayer/VideoPlayer.tsx";
 import {Timeline} from "../Timeline/Timeline.tsx";
 import {Button} from "../../components/Button/Button.tsx";
@@ -12,7 +12,7 @@ interface PreviewProps {
   titles: TitleItem[];
   duration: number;
   selectedId: string|null;
-  onSelect: (id: string) => void;
+  onSelect: (id: string | null) => void;
   onTitleChange: (updatedTitle: TitleItem) => void;
 }
 
@@ -25,15 +25,32 @@ export function Preview({videoSrc, titles, duration, selectedId, onSelect, onTit
   // Données de la vidéo
   const [currentTime, setCurrentTime] = useState(0);
 
+  // Pendant la lecture : on lit le temps de la vidéo à CHAQUE image de l'écran (~60 fois/s).
+  // `timeupdate` n'arrive que ~4 fois/s → les animations seraient saccadées.
+  useEffect(() => {
+    if (!isPlaying) return;
+    let frameId: number;
+
+    function tick() {
+      const video = videoRef.current;
+      if (!video) return;
+      // La durée du montage vient du JSON, pas de la vidéo : on s'arrête pile à `duration`.
+      if (video.currentTime >= duration) {
+        video.pause();
+        video.currentTime = duration;
+      }
+      setCurrentTime(Math.min(video.currentTime, duration));
+      frameId = requestAnimationFrame(tick);
+    }
+
+    frameId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frameId);
+  }, [isPlaying, duration]);
+
+  // À l'arrêt (déplacement manuel, fin de vidéo) : `timeupdate` suffit.
   const handleTimeUpdate = () => {
     const video = videoRef.current;
     if (!video) return;
-
-    // La durée du montage vient du JSON, pas de la vidéo
-    if (video.currentTime >= duration) {
-      video.pause();
-      video.currentTime = duration;
-    }
     setCurrentTime(Math.min(video.currentTime, duration));
   }
 

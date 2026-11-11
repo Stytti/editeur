@@ -23,6 +23,14 @@
     background: var(--video-placeholder);
 }
 
+/* La vidéo remplit sa bande 16:9 (avant : attribut width={640} fixe). */
+.frame__video-element {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 /* Bouton rond bleu. Les classes .btn sont surchargées : pas de padding, pas de bordure. */
 .play-button {
     width: 40px;
