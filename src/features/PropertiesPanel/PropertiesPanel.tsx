@@ -87,8 +87,9 @@ export function PropertiesPanel({titleItem, duration, onFieldChange}: Properties
           <div className="segmented" role="group" aria-label="Alignement">
             {ALIGN.map((a) => (
               <Button key={a} className="segmented__item" aria-pressed={titleItem.align === a}
-                      text={ALIGN_LABELS[a]}
-                      onButtonClick={() => updateField('align', a)}/>
+                      onButtonClick={() => updateField('align', a)}>
+                {ALIGN_LABELS[a]}
+              </Button>
             ))}
           </div>
         </div>

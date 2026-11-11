@@ -1,16 +1,16 @@
-import {type ChangeEvent, useRef} from "react";
+import {type ChangeEvent, type ReactNode, useRef} from "react";
 import {Button} from "../Button/Button.tsx";
 import {type Montage} from "../../model/montageSchema.ts";
 import {parseMontage} from "../../model/montage.ts";
 
 interface ImportJsonButtonProps {
-  text: string;
+  children: ReactNode;
   onImport: (montage: Montage) => void;
   onError: (message: string) => void;
   className?: string;
 }
 
-export function ImportJsonButton({text, className, onImport, onError}: ImportJsonButtonProps) {
+export function ImportJsonButton({children, className, onImport, onError}: ImportJsonButtonProps) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   async function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
@@ -36,8 +36,10 @@ export function ImportJsonButton({text, className, onImport, onError}: ImportJso
     <>
       <input type="file" accept=".json,application/json" hidden
              ref={fileInputRef} onChange={handleFileChange}/>
-      <Button text={text} className={className}
-              onButtonClick={() => fileInputRef.current?.click()}/>
+      <Button className={className}
+              onButtonClick={() => fileInputRef.current?.click()}>
+        {children}
+      </Button>
     </>
   );
 }

@@ -33,7 +33,7 @@ export function Header({videoSrc, videoChange, addNewTitle, onImport, onImportEr
       <div className="toolbar__actions">
         <Field fieldType="select" label="Vidéo à utiliser" options={videoOptions} value={videoSrc}
                onChange={(value) => videoChange(value)}/>
-        <ImportJsonButton text="Importer JSON" onImport={onImport} onError={onImportError}/>
+        <ImportJsonButton onImport={onImport} onError={onImportError}>Importer JSON</ImportJsonButton>
         <Button onButtonClick={onExport}>Exporter JSON</Button>
         <Button className="btn--primary" onButtonClick={addNewTitle}>+ Ajouter un titre</Button>
       </div>

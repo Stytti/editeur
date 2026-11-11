@@ -23,7 +23,20 @@
     background: var(--video-placeholder);
 }
 
+/* Bouton rond bleu. Les classes .btn sont surchargées : pas de padding, pas de bordure. */
 .play-button {
-    padding: 10px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
     border-radius: 50%;
+    background: var(--accent);
+    color: var(--text-on-accent); /* = couleur de l'icône (fill="currentColor") */
+    display: grid;
+    place-items: center;
+    flex: none; /* sinon il s'écrase à côté de la timeline */
+}
+
+.play-button:hover {
+    filter: brightness(1.08);
 }

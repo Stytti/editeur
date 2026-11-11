@@ -12,7 +12,8 @@ interface LayerListItemProps {
 export function LayerListItem({titleItem, isSelected, onSelect}: LayerListItemProps) {
     return (
       <Button className={`layer-list-item ${isSelected ? 'layer-list-item--selected' : ''}`}
-              text={`${titleItem.text} (${titleItem.startTime}-${titleItem.endTime}s)`}
-              onButtonClick={() => onSelect(titleItem.id)} />
+              onButtonClick={() => onSelect(titleItem.id)}>
+        {titleItem.text} ({titleItem.startTime}-{titleItem.endTime}s)
+      </Button>
     );
 }
