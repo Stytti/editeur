@@ -15,7 +15,6 @@ npm run lint       # oxlint
 ```
 
 **Vidéos** : les fichiers `video1.mp4`, `video2.mp4`, `video3.mp4` sont à placer dans `public/media/`.
-Ce dossier est ignoré par git (fichiers lourds).
 
 ## Architecture
 
@@ -29,8 +28,7 @@ src/
   components/  briques réutilisables (Button, Field, Alert, ImportJsonButton)
 ```
 
-La logique métier vit dans des **modules purs sans React** (`model/`, `geometry/`, `animation/`) :
-ils se testent avec de simples valeurs, et les composants ne font que les appeler.
+La logique métier vit dans des **modules purs sans React** (`model/`, `geometry/`, `animation/`) 
 
 ### Unités
 
@@ -38,7 +36,7 @@ ils se testent avec de simples valeurs, et les composants ne font que les appele
   `y`, `height`, `fontSize`, `strokeWidth`, `shinyWidth` en % de la **hauteur**.
   Côté CSS, ces dernières valeurs sont en `cqh` (la frame est un *container* : 1 cqh = 1 % de sa hauteur),
   ce qui garde l'aperçu proportionnel quelle que soit sa taille à l'écran.
-- **Panneau en px** de la frame d'export 1080×1920 (plus parlant pour un humain), converti à l'entrée / la sortie.
+- **Panneau en px** de la frame d'export 1080×1920, converti à l'entrée / la sortie.
 - **Z-order = ordre du tableau** : le dernier titre est dessiné au-dessus. La liste des calques l'affiche inversé
   (premier plan en haut) ; un titre dupliqué est inséré juste au-dessus de l'original.
 
@@ -67,13 +65,15 @@ Une fonction de `t`, l'aperçu et un rendu serveur peuvent l'appeler avec le mê
 
 ## Choix d'interprétation
 
-- **Contour (`strokeWidth`)** : interprété comme l'épaisseur **visible** du contour, tracé vers l'extérieur
-  des lettres comme le `borderw` d'ffmpeg. En CSS, `-webkit-text-stroke` est centré sur le bord de la lettre
-  et `paint-order: stroke fill` en cache la moitié intérieure : la valeur est donc **doublée** pour que la partie
-  visible fasse `strokeWidth`. Conséquence assumée : le `strokeWidth: 2` du JSON d'exemple (2 % de 1920 = 38 px,
-  pour des lettres de 84 px) donne un contour très épais. C'est la donnée qui est épaisse, pas le rendu.
+- **Contour (`strokeWidth`)** : interprété comme l'épaisseur du **trait**, en % de la hauteur de frame, passée telle
+  quelle à `-webkit-text-stroke`. Le trait est centré sur le bord de la lettre et `paint-order: stroke fill` en cache
+  la moitié intérieure : le contour visible dépasse donc de `strokeWidth / 2` autour des lettres. Le texte reçoit un
+  `padding` vertical de cette valeur, pour que le contour reste dans la boîte et soit compté par l'auto-fit.
+  Le `strokeWidth: 2` du JSON d'exemple donne un contour épais (1 % de 1920 = 19 px de chaque côté, pour des
+  lettres de 84 px) mais lisible. (Une première version doublait la valeur : le contour faisait la taille des
+  lettres et les collait en un seul bloc.)
 - **Auto-fit de la hauteur** : `height` est une *sortie* de la mesure du texte (+ 1 % de marge), jamais une entrée.
-  Elle est recalculée quand le texte, la police, la taille, la largeur ou le contour changent, et après le chargement
+  La mesure inclut le contour (voir ci-dessus). Elle est recalculée quand le texte, la police, la taille, la largeur ou le contour changent, et après le chargement
   des polices. Conséquence : dès l'import, la hauteur peut être ajustée, donc un import → export **depuis l'éditeur**
   peut modifier `height` (les autres champs restent identiques).
 
@@ -84,6 +84,13 @@ Une fonction de `t`, l'aperçu et un rendu serveur peuvent l'appeler avec le mê
   la lecture s'arrête à `duration`.
 - La police `snowball` n'existe pas sur Google Fonts : elle s'affiche avec une police de repli.
 - Les animations sont coupées pendant l'édition inline du texte (pour taper sur un texte entier et immobile).
+- L'auto-fit ne mesure que les titres **affichés** au temps courant (un titre hors de sa plage n'est pas monté).
+  Un titre ajouté ou modifié en dehors de sa plage garde sa hauteur précédente jusqu'à ce que le scrubber passe dessus,
+  et il est exporté avec cette hauteur. Correction possible : monter tous les titres et cacher ceux hors plage
+  avec `visibility: hidden` (la mesure fonctionne quand même).
+- Le temps affiché par la timeline est définie par le fichier d'import JSON, on ne gère pas ici la durée de la vidéo.
+- L'éditeur ne gère pas les **calques de vidéo** : on ne peut pas importer une vidéo, la découper, la déplacer, la superposer.
+- Le cadre du texte ne permet pas de changer la hauteur, seulement la largeur.
 
 ## Avec plus de temps
 

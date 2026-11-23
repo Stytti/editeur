@@ -2,7 +2,7 @@ import type {TitleItem} from "../../../model/montageSchema.ts";
 import {type KeyboardEvent, type PointerEvent, type RefObject, useEffect, useLayoutEffect, useRef, useState} from "react";
 import {clamp} from "../../../geometry/clamp.ts";
 import {type Corner, CORNERS, resizeBox} from "../../../geometry/resize.ts";
-import {getTitleStyle} from "./getTitleStyle.ts";
+import {getTextStyle, getTitleStyle} from "./getTitleStyle.ts";
 import {sampleTitle, toCssTransform} from "../../../animation/sampleTitle.ts";
 
 // Marge ajoutée sous le texte par l'auto-fit, en % de la hauteur de frame.
@@ -166,13 +166,13 @@ export function TitleView({ title, currentTime, isSelected, frameRef, onSelect, 
       {/* key : en passant en édition, React crée un NOUVEL élément (vide, rempli par l'effet).
           Sans ça, React mélangerait son texte avec celui tapé dans le navigateur à la sortie. */}
       {isEditing ? (
-        <div key="editing" ref={textRef} className="title-layer__text"
+        <div key="editing" ref={textRef} className="title-layer__text" style={getTextStyle(title)}
              contentEditable suppressContentEditableWarning
              onBlur={finishEditing} onKeyDown={handleEditKeyDown}/>
       ) : (
         // Typewriter : les lettres pas encore « tapées » sont là mais invisibles →
         // la mise en page (retours à la ligne, hauteur mesurée par l'auto-fit) ne bouge pas.
-        <div key="view" ref={textRef} className="title-layer__text">
+        <div key="view" ref={textRef} className="title-layer__text" style={getTextStyle(title)}>
           {title.text.slice(0, sample?.visibleChars)}
           <span style={{visibility: "hidden"}}>{title.text.slice(sample?.visibleChars ?? title.text.length)}</span>
         </div>

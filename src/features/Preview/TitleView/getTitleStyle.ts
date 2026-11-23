@@ -23,7 +23,9 @@ export function getTitleStyle(title: TitleItem): CSSProperties {
     color: title.color,
     textAlign: title.align,
 
-    WebkitTextStroke: title.strokeWidth > 0 ? `${title.strokeWidth * 2}cqh ${title.strokeColor}` : undefined,
+    // Trait centré sur le bord de la lettre, moitié intérieure cachée par paint-order :
+    // le contour dépasse de strokeWidth / 2 autour des lettres (place réservée par getTextStyle).
+    WebkitTextStroke: title.strokeWidth > 0 ? `${title.strokeWidth}cqh ${title.strokeColor}` : undefined,
 
     // Glow : halo flou de la couleur du contour. Deux ombres empilées → halo plus dense.
     textShadow: title.shinyWidth > 0
@@ -34,4 +36,12 @@ export function getTitleStyle(title: TitleItem): CSSProperties {
     backgroundColor: title.backgroundColor ?? "transparent",
     borderRadius: title.backgroundColor ? `${BACKGROUND_RADIUS_CQH}cqh` : undefined,
   };
+}
+
+/**
+ * Style du texte dans la boîte : un padding vertical égal à ce qui dépasse du contour (strokeWidth / 2).
+ * scrollHeight compte le padding → l'auto-fit inclut le contour, qui ne sort plus de la boîte.
+ */
+export function getTextStyle(title: TitleItem): CSSProperties {
+  return {paddingBlock: `${title.strokeWidth / 2}cqh`};
 }
